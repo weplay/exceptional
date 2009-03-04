@@ -76,8 +76,9 @@ module Exceptional
     
     # given a regular ruby Exception class, will parse into an ExceptionData
     # object and post to getexceptional.com
-    def catch(exception)
+    def catch(exception, data = {})
       exception_data = parse(exception)
+      exception_data.parameters = data
       exception_data.controller_name = File.basename($0)
       post(exception_data)
     end
