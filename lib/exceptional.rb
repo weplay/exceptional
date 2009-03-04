@@ -66,6 +66,8 @@ module Exceptional
     
     # post the given exception data to getexceptional.com
     def post(exception_data)
+      return unless enabled?
+      
       hash = exception_data.to_hash
       if hash[:session]
         hash[:session].delete("initialization_options")
@@ -91,6 +93,8 @@ module Exceptional
     # creates an ExceptionData object
     # if Exceptional is running in :direct mode, will post to getexceptional.com
     def handle(exception, controller, request, params)
+      return unless enabled?
+      
       log! "Handling #{exception.message}", 'info'
       begin
         e = parse(exception)
